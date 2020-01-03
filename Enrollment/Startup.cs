@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin;
+using Models.Startups;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(Enrollment.Startup))]
@@ -8,7 +9,7 @@ namespace Enrollment
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            Authentication.ConfigureAuth(app);
         }
     }
 }

@@ -1,0 +1,46 @@
+﻿@model EnrolledSubject
+<div class="row">
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.EnrollmentId, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "S.Y";
+                settings.Properties.ValueField = "Id";
+                settings.Properties.TextField = "AvailableCourses.AvailableCourse";
+                settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){AvailableSubjectId.PerformCallback({enrollmentId:EnrollmentId.GetValue()})}";
+            })
+                .BindList(new UnitOfWork().EnrollmentsRepo.Get()).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-lg-6">
+        @{
+            Html.RenderAction("CboEnrolledSubjectAvailableSubjectPartial");
+        }
+    </div>
+</div>
+
+
+<div class="row margin-top-10">
+    <div class="col-lg-12 col-md-12 ">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "EnrolledSubjectsGridViewbtnSubmit";
+                settings.Text = "Submit";
+                settings.ClientSideEvents.Click = "function(s,e){EnrolledSubjectsGridView.UpdateEdit()}";
+
+            }).GetHtml();
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "EnrolledSubjectsGridViewbtnCancel";
+                settings.Text = "Cancel";
+                settings.ControlStyle.CssClass = "margin-left-10";
+                settings.ClientSideEvents.Click = "function(s,e){EnrolledSubjectsGridView.CancelEdit()}";
+            }).GetHtml();
+        }
+    </div>
+</div>

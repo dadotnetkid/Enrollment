@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Models.Repository;
 
 namespace Enrollment.Controllers
 {
+
     public class HomeController : Controller
     {
+        private UnitOfWork unitOfWork = new UnitOfWork();
+        // GET: Home
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult CoursesGridViewPartial()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return PartialView(unitOfWork.AvailableCoursesRepo.Get());
         }
-
-        public ActionResult Contact()
+        public ActionResult AnnouncementGridViewPartial()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return PartialView(unitOfWork.AnnouncementsRepo.Get());
         }
     }
 }

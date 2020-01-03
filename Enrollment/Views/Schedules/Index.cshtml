@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Schedules/Planner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Ajax.BeginForm(new AjaxOptions()
+{
+    Url = Url.Action("SchedulerPartial"),
+    UpdateTargetId="container",
+    OnBegin="showLoading()",
+    OnComplete="hideLoading()"
+        
+}))
+{
+    <div class="row">
+        <div class="col-lg-2">
+            @Html.DevExpress().ComboBox(settings =>
+            {
+                settings.Name = "StudentId";
+                settings.Properties.ValueField = "Id";
+                settings.Properties.TextField = "FullName";
+                settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){EnrollmentId.PerformCallback({studentId:StudentId.GetValue()})}";
+            }).BindList(new UnitOfWork().UserDetailsRepo.Get()).GetHtml()
+        </div>
+        <div class="col-lg-2">
+            @Html.Action("CboEnrollment")
+        </div>
+        <div class="col-lg-3">
+            @Html.DevExpress().Button(settings =>
+       {
+           settings.Name = "btnSubmit";
+           settings.Text = "Submit";
+           settings.UseSubmitBehavior = true;
+       }).GetHtml()
+        </div>
+    </div>
+}
+<div id="container">
+
+</div>
